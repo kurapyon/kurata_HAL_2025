@@ -368,7 +368,7 @@ BOOL RayHitField(XMFLOAT3 pos, XMFLOAT3 *HitPosition, XMFLOAT3 *Normal)
 	int ez = sz + 1;
 	int ex = sx + 1;
 
-	sz = sx = 0;	// Ç±Ç±ë‘Ç∆Ç‚Ç¡ÇƒÇÈÇÃãCÇ√Ç≠Ç©Ç»ÇüÅ[
+	sz = sx = 0;	
 	ez = g_nNumBlockZField-1;
 	ex = g_nNumBlockXField-1;
 

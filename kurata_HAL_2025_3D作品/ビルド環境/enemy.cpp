@@ -38,27 +38,27 @@
 
 
 // エネミー
-#define	VALUE_MOVE				(2.0f)				// 移動量
-#define	VALUE_ROTATE			(XM_PI * 0.02f)		// 回転量
-#define VALUE_SIZE				(5.0f)				// スケール
-#define ENEMY_SHADOW_SIZE		(0.4f)				// 影の大きさ
-#define ENEMY_OFFSET_Y			(30.0f)				// エネミーの足元をあわせる
+#define	VALUE_MOVE					(2.0f)				// 移動量
+#define	VALUE_ROTATE				(XM_PI * 0.02f)		// 回転量
+#define VALUE_SIZE					(5.0f)				// スケール
+#define ENEMY_SHADOW_SIZE			(0.4f)				// 影の大きさ
+#define ENEMY_OFFSET_Y				(30.0f)				// エネミーの足元をあわせる
 // 攻撃カウント
-#define ENEMY_USUALLY_CNTLOWER	(1000)				// 通常攻撃のカウント
-#define ENEMY_USUALLY_CNTUPPER	(2000)				// 通常攻撃のカウント
+#define ENEMY_USUALLY_CNTLOWER		(1000)				// 通常攻撃のカウント
+#define ENEMY_USUALLY_CNTUPPER		(2000)				// 通常攻撃のカウント
 // 被ダメージ
-#define ENEMY_RECEIVEWAIT		(180)				// 被ダメージ時の色変更時間
+#define ENEMY_RECEIVEWAIT			(180)				// 被ダメージ時の色変更時間
 // dissolve
-#define ENEMY_DISSOLVE			(1.0f)
+#define ENEMY_DISSOLVE				(1.0f)
 
 // ボス
-#define	VALUE_BOSSMOVE			(2.0f)				// 移動量
-#define	VALUE_BOSSROTATE		(XM_PI * 0.02f)		// 回転量
-#define VALUE_BOSSSIZE			(5.0f)				// スケール
-#define ENEMYBOSS_SHADOW_SIZE	(0.4f)				// 影の大きさ
-#define ENEMYBOSS_SPEED			(3.0f)				// ボスの移動スピード
-#define ENEMYBOSS_OFFSET_Y		(7.0f)				// エネミーの足元をあわせる
-#define ENEMYBOSS_PARTS_MAX		(2)					// プレイヤーのパーツの数
+#define	VALUE_BOSSMOVE				(2.0f)				// 移動量
+#define	VALUE_BOSSROTATE			(XM_PI * 0.02f)		// 回転量
+#define VALUE_BOSSSIZE				(5.0f)				// スケール
+#define ENEMYBOSS_SHADOW_SIZE		(0.4f)				// 影の大きさ
+#define ENEMYBOSS_SPEED				(3.0f)				// ボスの移動スピード
+#define ENEMYBOSS_OFFSET_Y			(7.0f)				// エネミーの足元をあわせる
+#define ENEMYBOSS_PARTS_MAX			(2)					// プレイヤーのパーツの数
 // 攻撃カウント
 #define ENEMYBOSS_USUALLY_CNTLOWER	(1000)			// 通常攻撃のカウント
 #define ENEMYBOSS_USUALLY_CNTUPPER	(2000)			// 通常攻撃のカウント
@@ -119,28 +119,18 @@ static INTERPOLATION_DATA move_tbl_temple[] = {	// pos, rot, scl, frame
 // 出現時
 static INTERPOLATION_DATA move_tbl_enemyboss0[] = {	// pos, rot, scl, frame
 	{ XMFLOAT3(0.0f,   10.0f, 400.0f), XMFLOAT3(0.0f, 0.0f,	   0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE), 60 },
-	{ XMFLOAT3(0.0f,   20.0f, 400.0f), XMFLOAT3(0.0f, 0.0f,	   0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE), 60 },
-	{ XMFLOAT3(0.0f,   30.0f, 400.0f), XMFLOAT3(0.0f, 0.0f,	   0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE), 60 },
-	{ XMFLOAT3(0.0f,   40.0f, 400.0f), XMFLOAT3(0.0f, 0.0f,	   0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE), 60 },
-	{ XMFLOAT3(0.0f,   50.0f, 400.0f), XMFLOAT3(0.0f, 0.0f,	   0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE), 60 },
-	{ XMFLOAT3(0.0f,  100.0f, 400.0f), XMFLOAT3(0.0f, 0.0f,	   0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE), 240 },
-	{ XMFLOAT3(0.0f,  100.0f, 400.0f), XMFLOAT3(0.0f, 0.0f,	   0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE), 240 },
-	{ XMFLOAT3(0.0f,  100.0f, 400.0f), XMFLOAT3(0.0f, 0.0f,	   0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE), 240 },
 
 };
 
 // 1回目の攻撃
 static INTERPOLATION_DATA move_tbl_enemyboss1[] = {	// pos, rot, scl, frame
-	{ XMFLOAT3(   0.0f,  100.0f,  400.0f), XMFLOAT3(0.0f, 0.0f,	 0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE),  600 },
-	{ XMFLOAT3(	  0.0f,   50.0f,  400.0f), XMFLOAT3(0.0f, 0.0f,  0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE),  600 },
-	{ XMFLOAT3(	  0.0f,  100.0f,  400.0f), XMFLOAT3(0.0f, 0.0f,  0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE),  600 },
-	{ XMFLOAT3(	  0.0f,   50.0f,  400.0f), XMFLOAT3(0.0f, 0.0f,  0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE),  600 },
-	{ XMFLOAT3(	  0.0f,  100.0f,  400.0f), XMFLOAT3(0.0f, 0.0f,  0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE),  600 },
-	{ XMFLOAT3(	  0.0f,   50.0f,  400.0f), XMFLOAT3(0.0f, 0.0f,  0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE),  600 },
-	{ XMFLOAT3(   0.0f,  100.0f,  400.0f), XMFLOAT3(0.0f, 0.0f,  0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE),  600 },
-	{ XMFLOAT3(   0.0f,  100.0f,  400.0f), XMFLOAT3(0.0f, 0.0f,  0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE),  600 },
-	{ XMFLOAT3(   0.0f,  100.0f,  400.0f), XMFLOAT3(0.0f, 0.0f,  0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE),  600 },
-	{ XMFLOAT3(	  0.0f,  100.0f,  400.0f), XMFLOAT3(0.0f, 0.0f,  0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE),    1 },
+	{ XMFLOAT3(0.0f,   100.0f,  400.0f), XMFLOAT3(0.0f, 0.0f,		   0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE),  600 },
+	{ XMFLOAT3(-400.0f, 100.0f, -400.0f), XMFLOAT3(0.0f, XM_PIDIV2,	   0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE),  600 },
+	{ XMFLOAT3(-750.0f,  50.0f, -750.0f), XMFLOAT3(0.0f, XM_PI,		   0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE),  600 },
+	{ XMFLOAT3( 750.0f, 50.0f, -750.0f), XMFLOAT3(0.0f, XM_PI,		   0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE),  600 },
+	{ XMFLOAT3( 400.0f, 50.0f, -400.0f), XMFLOAT3(0.0f, XM_PI * 1.5f,  0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE),  600 },
+	{ XMFLOAT3(0.0f,   100.0f,  400.0f), XMFLOAT3(0.0f, XM_2PI,		   0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE),  600 },
+	{ XMFLOAT3(0.0f,    100.0f, 400.0f), XMFLOAT3(0.0f, 0.0f,		   0.0f),   XMFLOAT3(VALUE_BOSSSIZE, VALUE_BOSSSIZE, VALUE_BOSSSIZE),    1 },
 
 };
 
@@ -196,35 +186,17 @@ static INTERPOLATION_DATA move_tbl_ring1[] = {	// pos, rot, scl, frame
 	{ XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f,          0.0f, 0.0f),   XMFLOAT3(1.0f, 1.0f, 1.0f),   1 },
 };
 
-static INTERPOLATION_DATA move_tbl_ring2[] = {	// pos, rot, scl, frame
-	{ XMFLOAT3( 0.0f,   100.0f, -400.0f), XMFLOAT3(0.0f,          0.0f, 0.0f),   XMFLOAT3(1.0f, 1.0f, 1.0f), 30 },
-	{ XMFLOAT3( 200.0f,   0.0f, -300.0f), XMFLOAT3(0.0f,         XM_PI, 0.0f),   XMFLOAT3(1.0f, 1.0f, 1.0f), 30 },
-	{ XMFLOAT3( 300.0f,   0.0f, -200.0f), XMFLOAT3(0.0f,  XM_PI * 1.5f, 0.0f),   XMFLOAT3(1.0f, 1.0f, 1.0f), 30 },
-	{ XMFLOAT3( 400.0f,   0.0f, -100.0f), XMFLOAT3(0.0f,        XM_2PI, 0.0f),   XMFLOAT3(1.0f, 1.0f, 1.0f), 30 },
-	{ XMFLOAT3(   0.0f,   0.0f,    0.0f), XMFLOAT3(0.0f,  XM_PI * 3.0f, 0.0f),   XMFLOAT3(1.0f, 1.0f, 1.0f), 30 },
-	{ XMFLOAT3(-200.0f,   0.0f,  200.0f), XMFLOAT3(0.0f, XM_2PI * 2.0f, 0.0f),   XMFLOAT3(1.0f, 1.0f, 1.0f), 30 },
-	{ XMFLOAT3(-300.0f,   0.0f,  300.0f), XMFLOAT3(0.0f,  XM_PI * 4.5f, 0.0f),   XMFLOAT3(1.0f, 1.0f, 1.0f), 30 },
-	{ XMFLOAT3(-400.0f,   0.0f,  400.0f), XMFLOAT3(0.0f,  XM_PI * 5.0f, 0.0f),   XMFLOAT3(1.0f, 1.0f, 1.0f), 30 },
-	{ XMFLOAT3(   0.0f,   0.0f,  400.0f), XMFLOAT3(0.0f, XM_2PI * 3.0f, 0.0f),   XMFLOAT3(1.0f, 1.0f, 1.0f), 30 },
-	{ XMFLOAT3(   0.0f,   0.0f, -400.0f), XMFLOAT3(0.0f,  XM_PI * 6.5f, 0.0f),   XMFLOAT3(1.0f, 1.0f, 1.0f), 30 },
-	{ XMFLOAT3(   0.0f, 100.0f, -400.0f), XMFLOAT3(0.0f,  XM_PI * 7.5f, 0.0f),   XMFLOAT3(1.0f, 1.0f, 1.0f), 120 },
-	{ XMFLOAT3(   0.0f, 100.0f, -400.0f), XMFLOAT3(0.0f,  XM_PI * 8.5f, 0.0f),   XMFLOAT3(1.0f, 1.0f, 1.0f), 120 },
-	{ XMFLOAT3(   0.0f, 100.0f, -400.0f), XMFLOAT3(0.0f,          0.0f, 0.0f),   XMFLOAT3(1.0f, 1.0f, 1.0f),   1 },
-};
-
 
 static INTERPOLATION_DATA* g_AnimTblAdr[] =
 {
 	move_tbl_boss,
 	move_tbl_ring1,
-	move_tbl_ring2,
 };
 
 enum ANIM
 {
 	tbl_boss,
 	tbl_ring1,
-	tbl_ring2,
 };
 
 //=============================================================================
@@ -425,7 +397,6 @@ void INITENEMY(void)
 	g_Enemy[1].tblMax = sizeof(move_tbl_temple) / sizeof(INTERPOLATION_DATA);	// 再生するアニメデータのレコード数をセット
 
 }
-
 
 void UPDATEENEMY(void)
 {
@@ -676,20 +647,9 @@ void INITBOSS(void)
 void UPDATEBOSS(void)
 {
 	PLAYER* player = GetPlayer();
-	g_EnemyBoss.use = TRUE;			// TRUE:生きてる
 
-
-		//// dissolve
-		//g_EnemyBoss.dissolve.threshold -= 0.01f;
-		//if (g_EnemyBoss.dissolve.threshold <= 0.0f)
-		//{
-		//	g_EnemyBoss.chek = TRUE;
-		//}
-
-		//// dissolveで出現させる
-		//if (g_EnemyBoss.chek == FALSE)	return;
-
-
+	// TRUE:生きてる
+	g_EnemyBoss.use = TRUE;	
 
 	g_EnemyBoss.oldpos = g_EnemyBoss.pos;
 
@@ -733,11 +693,6 @@ void UPDATEBOSS(void)
 	case 1:
 		g_EnemyBoss.tblNo  = tbl_enemyboss1;		// 再生するアニメデータの先頭アドレスをセット
 		g_EnemyBoss.tblMax = sizeof(move_tbl_enemyboss1) / sizeof(INTERPOLATION_DATA);	// 再生するアニメデータのレコード数をセット
-
-		//// パーツのリングを動かす
-		//g_BossParts[1].tblNo = tbl_ring2;
-		//g_BossParts[1].tblMax = sizeof(move_tbl_ring2) / sizeof(INTERPOLATION_DATA);	// 再生するアニメデータのレコード数をセット
-
 
 		// ベジェ曲線
 		bpos = g_EnemyBoss.pos;
@@ -845,7 +800,7 @@ void DRAWBOSS(void)
 	if (g_EnemyBoss.use == FALSE) return;
 	XMMATRIX mtxScl, mtxRot, mtxTranslate, mtxWorld;
 
-	//// dissolve
+	// dissolve
 	SetDissolve(&g_EnemyBoss.dissolve);
 	SetAlphaTestEnable(g_EnemyBoss.dissolve.Enable);
 
@@ -876,7 +831,7 @@ void DRAWBOSS(void)
 	// モデル描画
 	DrawModel(&g_EnemyBoss.model);
 
-	//// dissolve 描画後にFALSEに
+	// dissolve 描画後にFALSEに
 	SetDissolveEnable(FALSE);
 	SetAlphaTestEnable(g_EnemyBoss.dissolve.Enable);
 

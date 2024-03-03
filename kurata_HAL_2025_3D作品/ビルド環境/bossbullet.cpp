@@ -168,6 +168,7 @@ void UpdateBossBullet(void)
 			{
 				g_BossBullet[i].use = FALSE;
 				g_BossBullet[i].hp = 0.0f;
+				ReleaseShadow(g_BossBullet[i].shadowIdx);
 			}
 		}
 	}

@@ -19,11 +19,6 @@
 #define	POS_Y_CAM			(50.0f)			// カメラの初期位置(Y座標)
 #define	POS_Z_CAM			(-140.0f)		// カメラの初期位置(Z座標)
 
-//#define	POS_X_CAM		(0.0f)			// カメラの初期位置(X座標)
-//#define	POS_Y_CAM		(200.0f)		// カメラの初期位置(Y座標)
-//#define	POS_Z_CAM		(-400.0f)		// カメラの初期位置(Z座標)
-
-
 #define	VIEW_ANGLE		(XMConvertToRadians(45.0f))						// ビュー平面の視野角
 #define	VIEW_ASPECT		((float)SCREEN_WIDTH / (float)SCREEN_HEIGHT)	// ビュー平面のアスペクト比	
 #define	VIEW_NEAR_Z		(10.0f)											// ビュー平面のNearZ値
@@ -34,7 +29,6 @@
 
 #define UPPERLIMIT			(50.0f)				// カメラの上限
 #define LOWERLIMIT			(0.0f)				// カメラの下限
-
 
 //*****************************************************************************
 // グローバル変数
@@ -89,9 +83,8 @@ void UpdateCamera(void)
 
 	PLAYER* player = GetPlayer();
 
-//#ifdef _DEBUG
 	
-	if (GetKeyboardPress(DIK_A) || CameraLeftStick())
+	if (GetKeyboardPress(DIK_D) || CameraLeftStick())
 	{// 視点旋回「左」
 		g_Camera.rot.y += VALUE_ROTATE_CAMERA;
 		if (g_Camera.rot.y > XM_PI)
@@ -103,7 +96,7 @@ void UpdateCamera(void)
 		g_Camera.pos.z = g_Camera.at.z - cosf(g_Camera.rot.y) * g_Camera.len;
 	}
 
-	if (GetKeyboardPress(DIK_D) || CameraRightStick())
+	if (GetKeyboardPress(DIK_A) || CameraRightStick())
 	{// 視点旋回「右」
 		g_Camera.rot.y -= VALUE_ROTATE_CAMERA;
 		if (g_Camera.rot.y < -XM_PI)
@@ -124,24 +117,6 @@ void UpdateCamera(void)
 	{// 視点移動「下」
 		g_Camera.pos.y += VALUE_MOVE_CAMERA;
 	}
-
-#ifdef _DEBAG
-	if (GetKeyboardPress(DIK_U))
-	{// 近づく
-		g_Camera.len -= VALUE_MOVE_CAMERA;
-		g_Camera.pos.x = g_Camera.at.x - sinf(g_Camera.rot.y) * g_Camera.len;
-		g_Camera.pos.z = g_Camera.at.z - cosf(g_Camera.rot.y) * g_Camera.len;
-	}
-
-	if (GetKeyboardPress(DIK_M))
-	{// 離れる
-		g_Camera.len += VALUE_MOVE_CAMERA;
-		g_Camera.pos.x = g_Camera.at.x - sinf(g_Camera.rot.y) * g_Camera.len;
-		g_Camera.pos.z = g_Camera.at.z - cosf(g_Camera.rot.y) * g_Camera.len;
-	}
-
-#endif
-
 
 	// カメラを初期に戻す
 	if (GetKeyboardPress(DIK_R) || IsButtonTriggered(0,BUTTON_L2))

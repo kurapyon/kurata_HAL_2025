@@ -56,6 +56,7 @@ struct PLAYER
 	BOOL				use;
 	BOOL				ans;				// 当たり判定
 	BOOL				chek;				// ゲーム開始位置判定
+	BOOL				falling;			// 落下判定
 
 	float				size;
 

@@ -415,36 +415,39 @@ void CheckHit(void)
 			epos.y *= 15.0f;
 
 			//BCの当たり判定(エネミー1番目)
-			if (CollisionBC(bullet[i].pos, epos, bullet[i].fWidth, enemy[1].size))
+			if (enemy[1].use == TRUE)
 			{
-
-				// エフェクト用座標
-				for (int p = 0; p < 20; p++)
+				if (CollisionBC(bullet[i].pos, epos, bullet[i].fWidth, enemy[1].size))
 				{
-					XMFLOAT3 move = CalcParticleSparkMove(bullet[i].pos);
-					SetParticleEffect(bullet[i].pos, move, PARTICLE_SPARK_LIFE, TRUE);
-				}
 
-				// 効果音
-				PlaySound(SOUND_LABEL_SE_hit);
+					// エフェクト用座標
+					for (int p = 0; p < 20; p++)
+					{
+						XMFLOAT3 move = CalcParticleSparkMove(bullet[i].pos);
+						SetParticleEffect(bullet[i].pos, move, PARTICLE_SPARK_LIFE, TRUE);
+					}
 
-				// 当たったから未使用に戻す
-				bullet[i].use = FALSE;
-				ReleaseShadow(bullet[i].shadowIdx);
+					// 効果音
+					PlaySound(SOUND_LABEL_SE_hit);
 
-				// エネミーのライフを減らす
-				enemy[1].hp -= 1.0f;
-				enemy[1].dissolve.threshold += 0.1f;
+					// 当たったから未使用に戻す
+					bullet[i].use = FALSE;
+					ReleaseShadow(bullet[i].shadowIdx);
 
-				if (enemy[1].hp <= 0.0f)
-				{
-					// 敵キャラクターは倒される
-					enemy[1].use = FALSE;
-					ReleaseShadow(enemy[1].shadowIdx);
+					// エネミーのライフを減らす
+					enemy[1].hp -= 1.0f;
+					enemy[1].dissolve.threshold += 0.1f;
+
+					if (enemy[1].hp <= 0.0f)
+					{
+						// 敵キャラクターは倒される
+						enemy[1].use = FALSE;
+						ReleaseShadow(enemy[1].shadowIdx);
+					}
 				}
 			}
 
-			// エネミー1番目が倒されたら0番目と当たり判定
+			// エネミー1番目が倒されたら,0番目と当たり判定
 			if (enemy[1].use == FALSE)
 			{
 				//BCの当たり判定
@@ -631,7 +634,7 @@ void CheckHit(void)
 			{
 				// 当たったから未使用に戻す
 				bossbullet[i].use = FALSE;
-				ReleaseShadow(enemyatc[i].shadowIdx);
+				ReleaseShadow(bossbullet[i].shadowIdx);
 				// プレイヤーの色変更
 				player[0].ans = TRUE;
 

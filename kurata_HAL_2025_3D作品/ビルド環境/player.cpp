@@ -101,6 +101,10 @@
 #define START_POS_Z_1				( 200.0f)
 #define START_POS_Z_2				(-450.0f)
 
+// 落下ダメージ座標
+#define FALLINGPOS_Y				(-500.0f)
+
+
 //--------------------------------------------------------------------------------------
 // キーフレーム変更部分
 // アニメーションのリスト
@@ -327,6 +331,7 @@ HRESULT InitPlayer(void)
 		g_Player[i].jumpY		= 0.0f;
 		g_Player[i].jumpYMax	= PLAYER_JUMP_Y_MAX;
 		g_Player[i].jump_pos	= 0.0f;
+		g_Player[i].falling		= FALSE;
 
 		// バレット
 		g_Player[i].bulletX = 0.0f;
@@ -393,7 +398,6 @@ HRESULT InitPlayer(void)
 		g_Parts[0].tblNo = 0;			// 再生するアニメデータの先頭アドレスをセット
 		//g_Parts[0].tblMax = sizeof(move_tbl_head) / sizeof(INTERPOLATION_DATA);	// 再生するアニメデータのレコード数をセット
 		g_Parts[0].tblMax = (int)g_TblAdr[g_Parts[0].tblNo]->size();	// ← 変更部分
-		//LoadModel(MODEL_PLAYER_BODY, &g_PartModel[0].model);
 
 		// キーフレーム変更部分
 		g_Parts[1].use = TRUE;
@@ -401,7 +405,6 @@ HRESULT InitPlayer(void)
 		g_Parts[1].tblNo = 1;			// 再生するアニメデータの先頭アドレスをセット
 		//g_Parts[0].tblMax = sizeof(move_tbl_head) / sizeof(INTERPOLATION_DATA);	// 再生するアニメデータのレコード数をセット
 		g_Parts[1].tblMax = (int)g_TblAdr[g_Parts[1].tblNo]->size();	// ← 変更部分
-		//LoadModel(MODEL_PLAYER_HEAD, &g_PartModel[1].model);
 
 		// キーフレーム変更部分
 		g_Parts[2].use = TRUE;
@@ -409,7 +412,6 @@ HRESULT InitPlayer(void)
 		g_Parts[2].tblNo = 2;			// 再生するアニメデータの先頭アドレスをセット
 		//g_Parts[0].tblMax = sizeof(move_tbl_head) / sizeof(INTERPOLATION_DATA);	// 再生するアニメデータのレコード数をセット
 		g_Parts[2].tblMax = (int)g_TblAdr[g_Parts[2].tblNo]->size();	// ← 変更部分
-		//LoadModel(MODEL_PLAYER_ARM_L, &g_PartModel[2].model);
 
 		// キーフレーム変更部分
 		g_Parts[3].use = TRUE;
@@ -417,7 +419,6 @@ HRESULT InitPlayer(void)
 		g_Parts[3].tblNo = 3;			// 再生するアニメデータの先頭アドレスをセット
 		//g_Parts[0].tblMax = sizeof(move_tbl_head) / sizeof(INTERPOLATION_DATA);	// 再生するアニメデータのレコード数をセット
 		g_Parts[3].tblMax = (int)g_TblAdr[g_Parts[3].tblNo]->size();	// ← 変更部分
-		//LoadModel(MODEL_PLAYER_ARM_R, &g_PartModel[3].model);
 
 		// キーフレーム変更部分
 		g_Parts[4].use = TRUE;
@@ -425,7 +426,6 @@ HRESULT InitPlayer(void)
 		g_Parts[4].tblNo = 4;			// 再生するアニメデータの先頭アドレスをセット
 		//g_Parts[0].tblMax = sizeof(move_tbl_head) / sizeof(INTERPOLATION_DATA);	// 再生するアニメデータのレコード数をセット
 		g_Parts[4].tblMax = (int)g_TblAdr[g_Parts[4].tblNo]->size();	// ← 変更部分
-		//LoadModel(MODEL_PLAYER_THINGS_L, &g_PartModel[4].model);
 
 		// キーフレーム変更部分
 		g_Parts[5].use = TRUE;
@@ -433,7 +433,6 @@ HRESULT InitPlayer(void)
 		g_Parts[5].tblNo = 5;			// 再生するアニメデータの先頭アドレスをセット
 		//g_Parts[0].tblMax = sizeof(move_tbl_head) / sizeof(INTERPOLATION_DATA);	// 再生するアニメデータのレコード数をセット
 		g_Parts[5].tblMax = (int)g_TblAdr[g_Parts[5].tblNo]->size();	// ← 変更部分
-		//LoadModel(MODEL_PLAYER_THINGS_R, &g_PartModel[5].model);
 
 		// キーフレーム変更部分
 		g_Parts[6].use = TRUE;
@@ -441,7 +440,6 @@ HRESULT InitPlayer(void)
 		g_Parts[6].tblNo = 6;			// 再生するアニメデータの先頭アドレスをセット
 		//g_Parts[0].tblMax = sizeof(move_tbl_head) / sizeof(INTERPOLATION_DATA);	// 再生するアニメデータのレコード数をセット
 		g_Parts[6].tblMax = (int)g_TblAdr[g_Parts[6].tblNo]->size();	// ← 変更部分
-		//LoadModel(MODEL_PLAYER_LEG_L, &g_PartModel[6].model);
 
 		// キーフレーム変更部分
 		g_Parts[7].use = TRUE;
@@ -449,7 +447,6 @@ HRESULT InitPlayer(void)
 		g_Parts[7].tblNo = 7;			// 再生するアニメデータの先頭アドレスをセット
 		//g_Parts[0].tblMax = sizeof(move_tbl_head) / sizeof(INTERPOLATION_DATA);	// 再生するアニメデータのレコード数をセット
 		g_Parts[7].tblMax = (int)g_TblAdr[g_Parts[7].tblNo]->size();	// ← 変更部分
-		//LoadModel(MODEL_PLAYER_LEG_R, &g_PartModel[7].model);
 
 		// モデルの読み込み
 		for (int m = 0; m < PLAYER_PARTS_MAX; m++)
@@ -518,13 +515,14 @@ void UpdatePlayer(void)
 	for (int i = 0; i < MAX_PLAYER; i++)
 	{
 		// レイキャストして足元の高さを求める・重力判定
-		XMFLOAT3 HitPosition;		// 交点 地面の当たったところ
-		XMFLOAT3 Normal;			// ぶつかったポリゴンの法線ベクトル（向き）
-		BOOL ans = RayHitField(g_Player[i].pos, &HitPosition, &Normal);	// 当たっていたら
-		BOOL gravity = TRUE;		// 重力をつけるかどうか
-		float distance = 0.0f;		// 地面とプレイヤーの差
+		XMFLOAT3 HitPosition;				// 交点 地面の当たったところ
+		XMFLOAT3 Normal;					// ぶつかったポリゴンの法線ベクトル（向き）
+		g_Player[0].falling = RayHitField(g_Player[i].pos, &HitPosition, &Normal);	// 当たっていたら
+		BOOL gravity = TRUE;				// 重力をつけるかどうか
+		float distance = 0.0f;				// 地面とプレイヤーの差
+		float FallingPos = FALLINGPOS_Y;	// 落下ダメージ座標
 
-		if (ans)
+		if (g_Player[0].falling)
 		{
 			distance = g_Player[i].pos.y - HitPosition.y;	// プレイヤーと地面の高さの差が出る
 
@@ -541,10 +539,17 @@ void UpdatePlayer(void)
 			// 重力を付ける
 			g_Player[i].pos.y -= GRAVITY;
 
+			// この座標より下ならダメージをうける
+			if (g_Player[i].pos.y <= FALLINGPOS_Y)
+			{
+				g_Player[i].hp -= 1.0f;
+				g_Player[i].pos = XMFLOAT3(22.0f, PLAYER_OFFSET_Y, -600.0f);
+			}
+
 		}
 
 		// もし地面より下なら元の位置に戻す
-		if (distance < 0.0f && ans == TRUE)
+		if (distance < 0.0f && g_Player[0].falling == TRUE)
 		{
 			g_Player[i].pos.y -= distance - PLAYER_OFFSET_Y;
 		}
